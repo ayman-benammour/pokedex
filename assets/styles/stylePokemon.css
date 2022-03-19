@@ -1,0 +1,153 @@
+.header
+{
+    display: flex;
+    flex-direction: row;
+    margin-top: 60px;
+    justify-content: space-between;
+}
+
+.previousIcon img
+{
+    width: 20px;
+    height: auto;
+}
+
+.nextIcon img
+{
+    width: 20px;
+    height: auto;
+}
+
+.title
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -8px;
+}
+
+.title .namePokemon
+{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.title .idPokemon
+{
+    font-size: 16px;
+    color: #5d5e7d;
+}
+
+.cardPokemon
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 370px;
+    border-radius: 16px;
+    margin-top: 24px;
+}
+
+.cardPokemon img
+{
+    width: 80%;
+    height: auto;
+}
+
+.categoriesButtons
+{
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    color: #5d5e7d;
+    margin-top: 24px;
+}
+
+.buttonActive
+{
+    color: #2e3056;
+    font-weight: bold;
+}
+
+.categoriesContent
+{
+    margin-top: 24px;
+}
+
+.categoriesContent > div
+{
+    display: none;
+}
+
+.infosContent > div
+{
+    margin-bottom: 16px;
+}
+
+.infosContent span
+{
+    color: #2e3056;
+    font-weight: bold;
+}
+
+.infosContent > div
+{
+    margin-bottom: 8px;
+}
+
+.categoriesContent > .contentActive
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.bioPokemon
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.cardsList
+{
+    display: flex;
+    height: 10vh;
+}
+
+.miniCardPokemon
+{
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    margin-right: 12px;
+    justify-content: center;
+}
+
+.miniCardPokemon img
+{
+    width: 80%;
+    height: auto;
+}
+
+.listStats
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+}
+
+.barStat
+{
+    width: calc(255% / 2.55);
+    height: 10px;
+    background-color: grey;
+}
+
+.barStat > div
+{
+    height: 10px;
+    background-color: rgb(120, 201, 73);
+}
