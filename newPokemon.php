@@ -13,6 +13,13 @@ $resultJsonSpecies = apiCall($urlSpecies);
 
 include './includes/pokemonConfig.php';
 
+$hpStat = $resultJsonPokemon->stats[0]->base_stat / 2.55;
+$attackStat = $resultJsonPokemon->stats[1]->base_stat / 2.55;
+$defenseStat = $resultJsonPokemon->stats[2]->base_stat / 2.55;
+$specialAttackStat = $resultJsonPokemon->stats[3]->base_stat / 2.55;
+$specialDefenseStat = $resultJsonPokemon->stats[4]->base_stat / 2.55;
+$speedStat = $resultJsonPokemon->stats[5]->base_stat / 2.55;
+
 ?>
 
 <!-- HEADER -->
@@ -78,6 +85,37 @@ include './includes/pokemonConfig.php';
             <div class="statsContent">
                 <div class="listStats">
 
+                    <!-- HP -->
+                    <div class="barStat">
+                        <div class="hpStat" style="background-color: #90ee90; width: <?= $hpStat ?>%;"></div>
+                    </div>
+
+                    <!-- Attack -->
+                    <div class="barStat">
+                        <div class="attackStat" style="background-color: #f08080; width: <?= $attackStat ?>%;"></div>
+                    </div>
+
+                    <!-- Defense -->
+                    <div class="barStat">
+                        <div class="defenseStat" style="background-color: #add8e6; width: <?= $defenseStat ?>%;"></div>
+                    </div>
+
+                    <!-- Special attack -->
+                    <div class="barStat">
+                        <div class="specialAttackStat" style="background-color: #ffa07a; width: <?= $specialAttackStat ?>%;"></div>
+                    </div>
+
+                    <!-- Special defense -->
+                    <div class="barStat">
+                        <div class="specialDefenseStat" style="background-color: #b0c4de; width: <?= $specialDefenseStat ?>%;"></div>
+                    </div>
+
+                    <!-- Speed -->
+                    <div class="barStat">
+                        <div class="speedStat" style="background-color: #87cefa; width: <?= $speedStat ?>%;"></div>
+                    </div>
+
+                    
                 </div>
             </div>
         </div>
