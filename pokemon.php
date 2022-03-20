@@ -3,114 +3,131 @@
 // Includes
 include './includes/config.php';
 
+$urlPokemonsList = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=30';
+
 $urlPokemon = 'https://pokeapi.co/api/v2/pokemon/' . strtolower($pokemon);
 $urlSpecies = 'https://pokeapi.co/api/v2/pokemon-species/' . strtolower($pokemon);
 
 $resultJsonPokemon = apiCall($urlPokemon);
-$resultJsonPokemonSpecies = apiCall($urlSpecies);
+$resultJsonSpecies = apiCall($urlSpecies);
 
-$colorOfPokemon = $resultJsonPokemonSpecies->color->name;
-$colorBackground = '#000000';
+include './includes/pokemonConfig.php';
 
-switch($colorOfPokemon)
-{
-    case 'black':
-        $colorBackground = '#252525';
-        break;
-
-    case 'blue':
-        $colorBackground = '#002a4a';
-        break;
-
-    case 'brown':
-        $colorBackground = '#624226';
-        break;
-        
-    case 'gray':
-        $colorBackground = '#616161';
-        break;
-
-    case 'green':
-        $colorBackground = '#7bad56';
-        break;
-
-    case 'pink':
-        $colorBackground = '#d0768f';
-        break;
-
-    case 'purple':
-        $colorBackground = '#7a29d6';
-        break;
-
-    case 'red':
-        $colorBackground = '#b22e2f';
-        break;
-
-    case 'white':
-        $colorBackground = '#c7c7c7';
-        break;
-
-    case 'yellow':
-        $colorBackground = '#ffc000';
-        break;
-}
-
-$typesOfPokemon = $resultJsonPokemon->types;
+$hpStat = $resultJsonPokemon->stats[0]->base_stat / 2.55;
+$attackStat = $resultJsonPokemon->stats[1]->base_stat / 2.55;
+$defenseStat = $resultJsonPokemon->stats[2]->base_stat / 2.55;
+$specialAttackStat = $resultJsonPokemon->stats[3]->base_stat / 2.55;
+$specialDefenseStat = $resultJsonPokemon->stats[4]->base_stat / 2.55;
+$speedStat = $resultJsonPokemon->stats[5]->base_stat / 2.55;
 
 ?>
 
 <!-- HEADER -->
 <?php include './chunks/header.php' ?>
+<!-- CSS -->
 <link rel="stylesheet" href="../assets/styles/style.css">
+<link rel="stylesheet" href="../assets/styles/stylePokedex.css">
+<link rel="stylesheet" href="../assets/styles/stylePokemon.css">
 </head>
-<body style="background-color:<?= $colorBackground ?>">
+<body>
 
-    <!-- GRID -->
     <div class="grid">
-
-        <!-- HEADER -->
         <div class="header">
-
-            <!-- BUTTON PREVIOUS -->
-            <a href="./index.php" class="buttonPrevious">
-                <img src="./assets/images/previous-icon.svg" alt="Previous">
+            <a class="previousIcon" href="./pokemon.php?pokemon=<?= $pokemon - 1?>">
+                <img src="./assets/images/previous-icon.svg">
             </a>
+            <div class="title">
+                <div class="namePokemon"><?= ucfirst($resultJsonPokemon->name) ?></div>
+                <div class="idPokemon"><?= str_pad($resultJsonPokemon->id,  3, "00", STR_PAD_LEFT) ?></div>
+            </div>
+            <a class="nextIcon" href="./pokemon.php?pokemon=<?= $pokemon + 1?>">
+                <img src="./assets/images/next-icon.svg">
+            </a>
+        </div>
 
-            <!-- NAME AND NUMBER OF POKEMON -->
-            <div class="titlePokemon">
-                <div class="numberOfPokemon"><?= str_pad($resultJsonPokemon->id,  4, "#00", STR_PAD_LEFT) ?></div>
-                <div class="nameOfPokemon"><?= ucfirst($resultJsonPokemon->name) ?></div>
+        <div class="cardPokemon" style="background-color:<?= $colorBackground ?>">
+            <img src="<?= $resultJsonPokemon->sprites->other->{'official-artwork'}->front_default ?>">
+        </div>
+
+        <div class="categoriesButtons">
+            <div class="infosButton buttonActive">Infos</div>
+            <div class="formsButton">Forms</div>
+            <div class="typesButton">Types</div>
+            <div class="statsButton">Stats</div>
+        </div>
+
+        <div class="categoriesContent">
+
+            <div class="infosContent contentActive">
+                <div class="heightPokemon"><span>Height</span>&nbsp-&nbsp<?= $resultJsonPokemon->height / 10 ?>&nbspm</div>
+                <div class="weightPokemon"><span>Weight</span>&nbsp-&nbsp<?= $resultJsonPokemon->weight / 10 ?>&nbspkg</div>
+                <div class="bioPokemon"><span>Bio</span><?= str_replace("", " ", $resultJsonSpecies->flavor_text_entries[0]->flavor_text) ?></div>
             </div>
 
-        </div>
+            <div class="formsContent">
+                <div class="cardsList">
+                    <?php
+                    include './includes/pokemonChainArray.php';
 
-        <!-- POKEMON IMAGE AND JAPANESE NAME -->
-        <div class="pokemonHero">
-            <div class="imageOfPokemon"><img src="<?= $resultJsonPokemon->sprites->other->{'official-artwork'}->front_default ?>"></div>
-            <div class="nameOfPokemonJapanese"><?= $resultJsonPokemonSpecies->names[0]->name ?></div>
-        </div>
+                    foreach ($evolutionChainArray as $key => $evolution) 
+                    {
 
-        <!-- CONTENT -->
-        <div class="content">
-            <div class="infos">
-                <div class="heightOfPokemon"><span>Height</span>&nbsp-&nbsp<?= $resultJsonPokemon->height / 10 ?>&nbspm</div>
-                <div class="weightOfPokemon"><span>Weight</span>&nbsp-&nbsp<?= $resultJsonPokemon->weight / 10 ?>&nbspkg</div>
-                <div class="typeOfPokemon"><span>Type</span>&nbsp-
-                    <?php foreach ($typesOfPokemon as $key => $typeOfPokemon) { ?>
-                        <?= ($key!=0 ? '& ' : '') . ucfirst($typeOfPokemon->type->name)  ?>
+                    $urlPokemon = 'https://pokeapi.co/api/v2/pokemon/' . $evolution;
+                    $resultJsonPokemon = apiCall($urlPokemon);
+                    ?>
+                    <a class="miniCardPokemon" href="./pokemon.php?pokemon=<?= $resultJsonPokemon->id ?>" style="background-color:<?= $colorBackground ?>">
+                        <img src="<?= $resultJsonPokemon->sprites->other->{'official-artwork'}->front_default ?>">
+                    </a>
                     <?php } ?>
                 </div>
             </div>
-            
-            <div class="bioOfPokemon">
-                <div class="title">Bio</div>
-                <div class="contentOfBio"><?= str_replace("", " ", $resultJsonPokemonSpecies->flavor_text_entries[0]->flavor_text) ?></div>
+
+            <div class="typesContent"></div>
+            <div class="statsContent">
+                <div class="listStats">
+
+                    <!-- HP -->
+                    <p>HP</p>
+                    <div class="barStat">
+                        <div class="hpStat" style="background-color: #90ee90; width: <?= $hpStat ?>%;"></div>
+                    </div>
+
+                    <!-- Attack -->
+                    <p>Attack</p>
+                    <div class="barStat">
+                        <div class="attackStat" style="background-color: #f08080; width: <?= $attackStat ?>%;"></div>
+                    </div>
+
+                    <!-- Defense -->
+                    <p>Defense</p>
+                    <div class="barStat">
+                        <div class="defenseStat" style="background-color: #add8e6; width: <?= $defenseStat ?>%;"></div>
+                    </div>
+
+                    <!-- Special attack -->
+                    <p>Special attack</p>
+                    <div class="barStat">
+                        <div class="specialAttackStat" style="background-color: #ffa07a; width: <?= $specialAttackStat ?>%;"></div>
+                    </div>
+
+                    <!-- Special defense -->
+                    <p>Special defense</p>
+                    <div class="barStat">
+                        <div class="specialDefenseStat" style="background-color: #b0c4de; width: <?= $specialDefenseStat ?>%;"></div>
+                    </div>
+
+                    <!-- Speed -->
+                    <p>Speed</p>
+                    <div class="barStat">
+                        <div class="speedStat" style="background-color: #87cefa; width: <?= $speedStat ?>%;"></div>
+                    </div>
+
+                </div>
             </div>
         </div>
-
     </div>
 
-
+    <script src="./assets/js/script.js"></script>
 
 <!-- FOOTER -->
 <?php include './chunks/footer.php' ?>

@@ -8,6 +8,7 @@ body
 {
     margin-left: 40px;
     margin-right: 40px;
+    margin-bottom: 100px;
 }
 
 .header
@@ -34,7 +35,7 @@ body
     display: flex;
     background-color: #ebf3f5;
     border-radius: 12px;
-    width: 80%;
+    width: 100%;
 }
 
 .inputText
@@ -60,7 +61,13 @@ body
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-top: 5%;
+    margin-top: 30px;
+}
+
+.listPokemon h2
+{
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .listPokemon .pokemonCard
@@ -79,4 +86,24 @@ body
 .listPokemon .pokemonCard .spritePokemonCard
 {
     width: 80%;
+}
+
+.paging
+{
+    display: flex;
+    flex-direction: row;
+    margin-top: 60px;
+    justify-content: space-between;
+}
+
+.previousIcon img
+{
+    width: 20px;
+    height: auto;
+}
+
+.nextIcon img
+{
+    width: 20px;
+    height: auto;
 }

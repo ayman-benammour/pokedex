@@ -1,9 +1,14 @@
 <?php
+header('test.com', true, 1);
 
 // Includes
 include './includes/config.php';
 
-$urlPokemonsList = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=30';
+
+$page = empty($_GET['page']) ? '1' : $_GET['page'];
+$startAt = ($page - 1) * 30;
+
+$urlPokemonsList = 'https://pokeapi.co/api/v2/pokemon/?offset=' . $startAt . '&limit=30';
 
 $resultJsonPokemonsList = apiCall($urlPokemonsList);
 
@@ -17,13 +22,12 @@ $urlSpecies = 'https://pokeapi.co/api/v2/pokemon-species/' . strtolower($key + 1
 $resultJsonPokemon = apiCall($urlPokemon);
 $resultJsonSpecies = apiCall($urlSpecies);
 
-
-
 ?>
 
 <!-- HEADER -->
 <?php include './chunks/header.php' ?>
 <!-- CSS -->
+<link rel="stylesheet" href="../assets/styles/style.css">
 <link rel="stylesheet" href="../assets/styles/stylePokedex.css">
 </head>
 <body>
@@ -31,12 +35,12 @@ $resultJsonSpecies = apiCall($urlSpecies);
     <main class="grid">
         <header class="header">
             <h1 class="mainTitle">Pokédex</h1>
-            <h3 class="descTitle">Search for a Pokémon by name or using its National Pokédex number</h3>
+            <h3 class="descTitle">Search for a Pokémon by using its National Pokédex number</h3>
             <!-- FORM -->
             <form class="form" action="./pokemon.php?pokemon=<?= $pokemon ?>" method="GET">
                 <!-- Search bar -->
                 <input class="inputSubmit" type="submit" value="">
-                <input href="./" class="inputText" type="search" placeholder="Name or number" name="pokemon" value="<?= $pokemon ?>">
+                <input class="inputText" type="number" placeholder="Number" name="pokemon" value="<?= $pokemon ?>">
             </form>
         </header>
 
@@ -50,13 +54,41 @@ $resultJsonSpecies = apiCall($urlSpecies);
 
                 include './includes/pokemonConfig.php';
             ?>
-                <a href="./pokemon.php?pokemon=<?= $key + 1 ?>" class="pokemonCard" style="background-color:<?= $colorBackground ?>">
+                <a href="./pokemon.php?pokemon=<?= $resultJsonPokemon->id ?>" class="pokemonCard" style="background-color:<?= $colorBackground ?>">
                     <img class="spritePokemonCard" src="<?= $resultJsonPokemon->sprites->other->{'official-artwork'}->front_default ?>" alt="Image of Pokemon">
                     <h2 class="namePokemonCard"><?= ucfirst($nameOfPokemon) ?></h2>
-                    <h3 class="idPokemonCard"><?= $key + 1 ?></h3>
+                    <h3 class="idPokemonCard"><?= $resultJsonPokemon->id ?></h3>
                 </a>
             <?php } ?>
         </section>
+
+        <div class="paging">
+
+            <a class="previousIcon" href="./index.php?page=<?= $page - 1?>">
+                <img src="./assets/images/previous-icon.svg">
+            </a>
+
+            <form action="./index.php?page=<?= $page ?>" method="GET">
+                <select name="page">
+                    <?php
+                        for($id = 1; $id <= 30; $id++)
+                        {
+                    ?>
+                        <option value="<?= $id ?>"><?= $id ?></option>
+                    <?php 
+                        } 
+                        $id = $page;
+                    ?>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+
+            <a class="nextIcon" href="./index.php?page=<?= $page + 1?>">
+                <img src="./assets/images/next-icon.svg">
+            </a>
+            
+        </div>
+
     </main>
 
 

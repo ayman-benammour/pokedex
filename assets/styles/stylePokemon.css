@@ -136,7 +136,14 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 150px;
+}
+
+.listStats > p
+{
+    color: #2e3056;
+    font-weight: bold;
+    margin-top: 4px;
+    font-size: 14px;
 }
 
 .barStat
@@ -144,10 +151,12 @@
     width: calc(255% / 2.55);
     height: 10px;
     background-color: grey;
+    border-radius: 100px;
 }
 
 .barStat > div
 {
     height: 10px;
     background-color: rgb(120, 201, 73);
+    border-radius: 100px;
 }
