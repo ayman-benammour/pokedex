@@ -1,0 +1,7 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-top: 200px;
+    align-items: center;
+}

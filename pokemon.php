@@ -72,17 +72,31 @@ $speedStat = $resultJsonPokemon->stats[5]->base_stat / 2.55;
                     foreach ($evolutionChainArray as $key => $evolution) 
                     {
 
-                    $urlPokemon = 'https://pokeapi.co/api/v2/pokemon/' . $evolution;
-                    $resultJsonPokemon = apiCall($urlPokemon);
+                    $urlPokemonFromEvolution = 'https://pokeapi.co/api/v2/pokemon/' . $evolution;
+                    $resultJsonPokemonFromEvolution = apiCall($urlPokemonFromEvolution);
                     ?>
-                    <a class="miniCardPokemon" href="./pokemon.php?pokemon=<?= $resultJsonPokemon->id ?>" style="background-color:<?= $colorBackground ?>">
-                        <img src="<?= $resultJsonPokemon->sprites->other->{'official-artwork'}->front_default ?>">
+                    <a class="miniCardPokemon" href="./pokemon.php?pokemon=<?= $resultJsonPokemonFromEvolution->id ?>" style="background-color:<?= $colorBackground ?>">
+                        <img src="<?= $resultJsonPokemonFromEvolution->sprites->other->{'official-artwork'}->front_default ?>">
                     </a>
                     <?php } ?>
                 </div>
             </div>
 
-            <div class="typesContent"></div>
+            <div class="typesContent">
+                <?php
+                    foreach ($resultJsonPokemon->types as $key => $typeOfPokemon) 
+                    {
+
+                    include './includes/pokemonTypeImage.php';
+                ?>
+                    <div class="typePokemon">
+                        <img src="./assets/images/types/type-<?= $typeOfPokemon->type->name ?>.svg" alt="Type <?= $typeOfPokemon->type->name ?>" width="80px" height="80px">
+                        <h3><?= ucfirst($typeOfPokemon->type->name) ?></h3>
+                    </div>
+                    
+                <?php } ?>
+            </div>
+
             <div class="statsContent">
                 <div class="listStats">
 

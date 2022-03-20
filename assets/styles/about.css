@@ -1,0 +1,13 @@
+.content
+{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.content a
+{
+    text-decoration: underline;
+}
+

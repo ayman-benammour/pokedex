@@ -5,7 +5,7 @@ header('test.com', true, 1);
 include './includes/config.php';
 
 
-$page = empty($_GET['page']) ? '1' : $_GET['page'];
+$page = empty($_GET['page']) ? header('location:404.php') : $_GET['page'];
 $startAt = ($page - 1) * 30;
 
 $urlPokemonsList = 'https://pokeapi.co/api/v2/pokemon/?offset=' . $startAt . '&limit=30';
@@ -74,13 +74,13 @@ $resultJsonSpecies = apiCall($urlSpecies);
                         for($id = 1; $id <= 30; $id++)
                         {
                     ?>
-                        <option value="<?= $id ?>"><?= $id ?></option>
+                        <option value="<?= $id ?>">Page <?= $id ?></option>
                     <?php 
                         } 
                         $id = $page;
                     ?>
                 </select>
-                <input type="submit" value="Submit">
+                <input type="submit" value="Go">
             </form>
 
             <a class="nextIcon" href="./index.php?page=<?= $page + 1?>">

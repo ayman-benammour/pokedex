@@ -44,4 +44,4 @@ function apiCall($url)
     return $result;
 }
 
-$pokemon = empty($_GET['pokemon']) ? '' : $_GET['pokemon'];
+$pokemon = empty($_GET['pokemon']) ? '1' : $_GET['pokemon'];
