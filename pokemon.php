@@ -86,8 +86,6 @@ $speedStat = $resultJsonPokemon->stats[5]->base_stat / 2.55;
                 <?php
                     foreach ($resultJsonPokemon->types as $key => $typeOfPokemon) 
                     {
-
-                    include './includes/pokemonTypeImage.php';
                 ?>
                     <div class="typePokemon">
                         <img src="./assets/images/types/type-<?= $typeOfPokemon->type->name ?>.svg" alt="Type <?= $typeOfPokemon->type->name ?>" width="80px" height="80px">
