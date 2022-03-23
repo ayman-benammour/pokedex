@@ -1,4 +1,5 @@
-!/**/.gitkeep
+/cache/*
+!/cache/.gitkeep
 
 ### macOS ###
 # General
